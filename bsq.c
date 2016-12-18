@@ -5,7 +5,7 @@
 ** Login   <mathias.descoin@epitech.eu@epitech.net>
 ** 
 ** Started on  Mon Dec 12 18:57:34 2016 Mathias
-** Last update Sun Dec 18 20:19:02 2016 Mathias
+** Last update Sun Dec 18 21:05:02 2016 Mathias
 */
 
 #include "h.h"
@@ -69,19 +69,35 @@ void place(t_all *all)
     }
 }
 
+void check(char *str)
+{
+  int fd;
+
+  fd = open(str, O_RDONLY);
+  close(fd);
+  if (fd == -1)
+    return (1);
+  return (0);
+}
+
 int main(int av, char **ac)
 {
   t_all *all;
 
-  all = malloc(sizeof(*all));
-  all->tab = malloc(sizeof(int) * 3);
-  find(all, ac[1]);
-  free(all->buff);
-  complete(all, ac[1]);
-  algo(all);
-  place(all);
-  write(1, all->buff, all->len + 1);
-  free(all->buff);
-  free(all->tab);
-  free(all);
+  if (av == 2)
+    {
+      if (check(ac[1]) == 1)
+	return (84);
+      all = malloc(sizeof(*all));
+      all->tab = malloc(sizeof(int) * 3);
+      find(all, ac[1]);
+      free(all->buff);
+      complete(all, ac[1]);
+      algo(all);
+      place(all);
+      write(1, all->buff, all->len + 1);
+      free(all->buff);
+      free(all->tab);
+      free(all);
+    }
 }
